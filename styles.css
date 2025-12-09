@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&family=Roboto&display=swap');
+
+:root {
+  --bg: #000000;
+  --card: rgba(0, 0, 0, 0.75);
+  --text: #e8f3ff;
+  --accent: #00ff00;
+  --border: url("assets/green-tech-border.svg");
+  --size: 800px;
+  --transition: 0.65s ease;
+  --perspective: 1600px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+/* --------------- Google Fonts: --------------- */
+
+/* Electrolize */
+.electrolize-regular {
+  font-family: "Electrolize", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Roboto */
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+/* --------------- Mobile First Design: --------------- */
+
+.mobile-ui { 
+  display: block; 
+}
+
+/* Sidebar menu is hidden on small screens; shown at >=750px via media query */
+.menu { 
+  display: none; 
+}
+
+.mobile-swiper-container .mobile-topbar { 
+  background-color: #6C757D;
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  top: 0; 
+  display:flex; 
+  justify-content: left; 
+  z-index: 10001; 
+}
+
+/* Mobile overlay container that covers the viewport on small screens */
+.mobile-swiper-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 9999;
+  background: transparent;
+}
+
+.mobile-swiper-container .swiper-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.mobile-swiper-container .swiper-slide.mobile-slide {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.mobile-swiper-container .slide-content.mobile-slide-content {
+  width: 100%;
+  max-width: 900px;
+  height: 80vh;
+  overflow: auto;
+}
+
+.mobile-swiper-container .mobile-topbar select { 
+  font-family: "Electrolize", sans-serif;
+  font-size: 18px;
+  padding: 8px 10px; 
+  border: 1px solid black; 
+  border-radius: 4px;
+  color: black;
+  background-color: white; 
+  text-align: left;
+}
+
+.mobile-swiper-container .swiper-button-prev, .mobile-swiper-container .swiper-button-next { 
+  color: var(--text); 
+}
+
+/* Hide swiper pagination dots */
+.mobile-swiper-container .swiper-pagination { 
+  display: none !important; 
+}
+
+/* --------------- Medium and Large Screen Elements --------------- */
+
+.app {
+  display: none;
+}
+
+/* duplicate baseline .menu display removed; see rule above */
+
+.btn {
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.btn:hover,
+.btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.viewport {
+  display: none;
+}
+
+.scene {
+  display: none;
+}
+
+/* --------------- Notification banner --------------- */
+.notify-banner {
+  box-sizing: border-box;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  font-size: 14px;
+  transform: translateY(-120%);
+  transition: transform 220ms ease, opacity 220ms ease;
+  opacity: 0;
+}
+.notify-show {
+  transform: translateY(0);
+  opacity: 1;
+}
+.notify-banner .notify-msg { color: #fff; text-align: center; flex: 1; }
+.notify-banner .notify-close { background: transparent; border: 0; color: #fff; cursor: pointer; font-size: 16px; padding: 0 6px; }
+.notify-banner.notify-error { background: #c62828; }
+.notify-banner.notify-success { background: #2e7d32; }
+.notify-banner.notify-warning { background: #f9a825; color: #111; }
+
+
+/* --------------- Media Queries --------------- */
+
+@media (min-width: 750px) {
+
+  .app {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    padding: 32px;
+  }
+
+  .menu {
+    display: grid;
+    gap: 12px;
+  }
+
+  .viewport {
+    position: relative;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  
+  }
+  
+  .scene {
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    perspective: var(--perspective, 1600px);
+    position: relative;
+  }
+
+  /* Ensure the viewport occupies available vertical space and centers the cube */
+  .viewport {
+    min-height: calc(100vh - 48px);
+    align-items: center;
+    justify-items: center;
+  }
+
+  .scene {
+    margin: 0 auto;
+    z-index: 1;
+    pointer-events: auto;
+    box-sizing: border-box;
+    max-width: var(--size);
+    max-height: var(--size);
+  }
+
+  /* Sidebar should layer above the scene but below mobile overlays/notifications */
+  .menu {
+    z-index: 10000;
+  }
+
+  .mobile-ui { 
+    display: none; 
+  }
+
+}
+
+/* Medium-screen collapsible sidebar (750px - 1149px) */
+@media (min-width: 750px) and (max-width: 1149px) {
+  .app { grid-template-columns: 220px 1fr; }
+  .menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 220px;
+    padding: 20px 12px;
+    background: rgba(0,0,0,0.5);
+    border-right: 2px solid rgba(255,255,255,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 9000;
+    transition: width 220ms ease, transform 220ms ease;
+  }
+  .menu .menu-inner { display:flex;flex-direction:column;gap:12px; }
+  .menu .btn { display:flex; align-items:center; gap:10px; padding:10px; border-radius:8px; }
+  .menu .btn .icon { font-size:18px; width:22px; text-align:center; }
+  .menu .btn .label { display:inline-block; white-space:nowrap; }
+  /* hide icons by default (only show when menu is collapsed) */
+  .menu .btn .icon { display: none; }
+  .menu.menu-collapsed { width:56px; }
+  .menu.menu-collapsed .btn { justify-content:center; padding:10px; }
+  .menu.menu-collapsed .btn .label { display:none; }
+  /* show icons only when collapsed */
+  .menu.menu-collapsed .btn .icon { display: inline-block; }
+  .menu-footer { display:flex; align-items:center; justify-content:center; padding:8px 0; }
+  #menu-collapse-toggle { background: transparent; border: 0; color: var(--text); cursor:pointer; font-size:20px; padding:6px; }
+  /* visible left-border for collapsed state to act as a click target */
+  .menu.menu-collapsed { box-shadow: inset -1px 0 0 0 rgba(0,128,255,0.4); }
+  /* Ensure the main app content is offset to the right so it isn't under the fixed sidebar */
+  .app { padding-left: 240px; }
+}
+
+/* When collapsed, reduce left offset */
+@media (min-width: 750px) and (max-width: 1149px) {
+  .menu.menu-collapsed ~ .viewport, .menu.menu-collapsed ~ .app { padding-left: 72px; }
+} 
+
+/* Prefer using a body class to adjust layout when collapsed/expanded */
+body.menu-collapsed .app { padding-left: 72px; }
+body:not(.menu-collapsed) .app { padding-left: 240px; }
+
+
+/* Responsive cube sizes: shrink as viewport narrows inside medium range */
+@media (min-width: 900px) and (max-width: 1149px) {
+  :root { --size: 600px; }
+}
+@media (min-width: 750px) and (max-width: 899px) {
+  :root { --size: 500px; }
+}
+
+/* Larger-screen scaling: increase cube size and perspective as viewport grows */
+@media (min-width: 1150px) and (max-width: 1399px) {
+  :root { --size: 900px; --perspective: 2000px; }
+}
+
+@media (min-width: 1400px) {
+  :root { --size: 1100px; --perspective: 2400px; }
+}
+

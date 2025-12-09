@@ -1,0 +1,8 @@
+[
+  {"id":"front","num":1,"link":"face1","title":"Front Face","type":"html","src":"front.html"},
+  {"id":"right","num":2,"link":"face2","title":"Right Face","type":"html","src":"right.html"},
+  {"id":"back","num":3,"link":"face3","title":"Back Face","type":"html","src":"back.html"},
+  {"id":"left","num":4,"link":"face4","title":"Left Face","type":"html","src":"left.html"},
+  {"id":"top","num":5,"link":"face5","title":"Top Face","type":"html","src":"top.html"},
+  {"id":"bottom","num":6,"link":"face6","title":"Bottom Face","type":"html","src":"bottom.html"}
+]

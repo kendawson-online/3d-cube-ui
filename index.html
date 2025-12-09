@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Cube</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="cube.css" />
+</head>
+<body>
+
+  <main class="app">
+
+    <!-- sidebar menu -->
+    <nav class="menu">
+
+        <!-- toggle icon -->
+        <div class="menu-footer" style="float: right;">
+          <button id="menu-collapse-toggle" class="menu-collapse" aria-label="Collapse menu">
+            <i class="bi bi-box-arrow-in-right"></i>
+          </button>
+        </div>
+
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 5px; color:red; font-weight: bold;">
+          <div class="electrolize-regular">3D</div>
+          <div><img src="assets/red-cube.svg" width="30" title="3D Cube UI" alt="3D Cube"></div>
+          <div class="electrolize-regular">Cube</div>
+        </div>
+
+        <div class="menu-inner">
+          <button class="btn" data-face="front"><i class="bi bi-1-circle-fill icon" aria-hidden="true"></i><span class="label">Front Face</span></button>
+          <button class="btn" data-face="right"><i class="bi bi-2-circle-fill icon" aria-hidden="true"></i><span class="label">Right Face</span></button>
+          <button class="btn" data-face="back"><i class="bi bi-3-circle-fill icon" aria-hidden="true"></i><span class="label">Back Face</span></button>
+          <button class="btn" data-face="left"><i class="bi bi-4-circle-fill icon" aria-hidden="true"></i><span class="label">Left Face</span></button>
+          <button class="btn" data-face="top"><i class="bi bi-5-circle-fill icon" aria-hidden="true"></i><span class="label">Top Face</span></button>
+          <button class="btn" data-face="bottom"><i class="bi bi-6-circle-fill icon" aria-hidden="true"></i><span class="label">Bottom Face</span></button>
+        </div>
+
+
+
+    </nav>
+
+    <section class="viewport">
+      <div class="scene" id="scene">
+
+        <!-- Begin 3D cube -->
+        <div class="cube" id="cube">
+           
+          <!-- Front Face -->  
+          <div class="face face-front" data-face="front">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-front-content"></div> 
+          </div>
+
+          <!-- Right Face -->
+          <div class="face face-right" data-face="right">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-right-content"></div>        
+          </div>
+
+          <!-- Back Face -->
+          <div class="face face-back" data-face="back">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-back-content"></div> 
+          </div>
+
+          <!-- Left Face -->
+          <div class="face face-left" data-face="left">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-left-content"></div> 
+          </div>
+
+          <!-- Top Face -->
+          <div class="face face-top" data-face="top">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-top-content"></div> 
+          </div>
+
+          <!-- Bottom Face -->
+          <div class="face face-bottom" data-face="bottom">
+            <div class="face-border"></div>
+            <div class="face-content" id="face-bottom-content"></div> 
+          </div>
+
+        </div>
+        <!-- End 3D cube -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Small Screen -->
+  <div id="mobile-ui" class="mobile-ui"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+  <script src="cubeManager.js"></script>
+  <script src="mobileManager.js"></script>
+  <script src="contentManager.js"></script>
+
+</body>
+</html>
