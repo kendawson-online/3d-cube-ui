@@ -3,9 +3,13 @@
 :root {
   --bg: #000000;
   --card: rgba(0, 0, 0, 0.75);
-  --text: #e8f3ff;
-  --accent: #00ff00;
-  --border: url("assets/green-tech-border.svg");
+  --text: #ffffff;
+  --accent: #00ffe6;
+  --border: url("assets/bg-teal-square-00ffe6.png");
+  /* alternate border options: */
+  /* --border: url("assets/bg-lime-square-00ff00.svg"); */
+  /* --border: url("assets/bg-yellow-square-ffcf35.png"); */
+  /* --border: url("assets/bg-lightblue-square-05f1f8.png"); */
   --size: 800px;
   --transition: 0.65s ease;
   --perspective: 1600px;

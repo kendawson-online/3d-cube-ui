@@ -11,6 +11,13 @@
 </head>
 <body>
 
+  <!-- DEV USE: troubleshooting element to display screen size dimensions -->
+  <div id="ss" style="padding-top: 3px; text-align: center; font-size: 11px; font-family: sans-serif; background-color: white; color: black; width: 70px; height: 18px; float: right; z-index: 1000;"></div>
+
+  <!-- Small Screen -->
+  <div id="mobile-ui" class="mobile-ui"></div>
+
+  <!-- Medium and Large Screens -->
   <main class="app">
 
     <!-- sidebar menu -->
@@ -37,8 +44,6 @@
           <button class="btn" data-face="top"><i class="bi bi-5-circle-fill icon" aria-hidden="true"></i><span class="label">Top Face</span></button>
           <button class="btn" data-face="bottom"><i class="bi bi-6-circle-fill icon" aria-hidden="true"></i><span class="label">Bottom Face</span></button>
         </div>
-
-
 
     </nav>
 
@@ -92,13 +97,39 @@
 
   </main>
 
-  <!-- Small Screen -->
-  <div id="mobile-ui" class="mobile-ui"></div>
-
   <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
   <script src="cubeManager.js"></script>
   <script src="mobileManager.js"></script>
   <script src="contentManager.js"></script>
+
+  <script>
+    // DEV USE: show screen size dimensions
+    const ss = document.getElementById('ss');
+    function showScreenSize() {
+      if (ss) {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        ss.textContent = `${w} x ${h}`;
+      }     
+    }
+    // call function on load
+    showScreenSize();
+    // call function again on resize
+    window.addEventListener("resize", showScreenSize);
+    // show/hide display via hot keys (0 & 1)
+    document.addEventListener('keydown', (event) => {
+        event.preventDefault();
+        if (event.key === '1') {
+          ss.style.display = 'block';
+          console.log('Turned on screen dimension display');
+        } else if (event.key === '0') {
+          ss.style.display = 'none';
+          console.log('Turned off screen dimension display');
+        } else {
+          return;
+        }
+    });
+  </script>
 
 </body>
 </html>
