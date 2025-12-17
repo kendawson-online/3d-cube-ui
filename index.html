@@ -1,159 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Cube UI</title>
-  <!-- SwiperJS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
-  <!-- Local Stylesheets -->
-  <link rel="stylesheet" href="loader.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="cube.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/img/favicon.svg" sizes="any" type="image/svg+xml">
+    <title>3D Cube UI</title>
+    <script>
+        // only show spiner on first load
+        if (localStorage.getItem('ui-has-loaded')) { document.documentElement.classList.add('loader-seen'); }
+    </script>
+    <!-- Bootstrap 5.3.8 and Bootstrap Icons 1.13.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+     <!-- SwiperJS 12 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <!-- Local Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="assets/css/loader.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/cube.css" />    
 </head>
 <body>
 
-  <!-- Loader overlay -->
-  <div id="loader-overlay" aria-hidden="false">
-    <div class="wrapper">
-      <div class="loading">Loading</div>
-      <div class="loader-cube" aria-hidden="true">
-          <div class="face front"></div>
-          <div class="face back"></div>
-          <div class="face left"></div>
-          <div class="face right"></div>
-          <div class="face top"></div>
-          <div class="face bottom"></div>
-      </div>
+    <!-- spinner (loading cube animation) -->
+    <div id="spinner-overlay">
+        <div class="wrapper">
+            <div class="loading">Loading...</div>
+            <div class="loader-cube" alt="Spinning cube animation">
+                <div class="loader-face front"></div>
+                <div class="loader-face back"></div>
+                <div class="loader-face left"></div>
+                <div class="loader-face right"></div>
+                <div class="loader-face top"></div>
+                <div class="loader-face bottom"></div>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- DEV USE: troubleshooting element to display screen size dimensions -->
-  <div id="ss" style="padding-top: 3px; text-align: center; opacity: 1; font-size: 11px; font-family: sans-serif; background-color: white; color: black; width: 70px; height: 18px; float: right; z-index: 30000;"></div>
+    <!-- notifications -->
+    <div id="notify-container" class="notify-container" aria-live="polite" aria-atomic="true">
+        <!-- Template banner (cloned by JS for each notification) -->
+        <div class="notify-banner" role="alert" aria-live="polite" style="display: none;">
+            <div class="notify-msg"></div>
+            <button class="notify-close" aria-label="Dismiss"><i class="bi bi-x-lg"></i></button>
+        </div>        
+    </div>
 
-  <div id="notify-container" class="notify-container" aria-live="polite" aria-atomic="true"></div>
+    <!-- mobile UI (SwiperJS) -->
+    <div id="mobile-ui" class="mobile-ui">
+        <div class="swiper mySwiper">
+            <div class="swiper-pagination"></div>
+            <div class="swiper-wrapper" id="swiper-wrapper">
+                <!-- slides will be dynamically added here -->
+            </div>
+            <div class="swiper-scrollbar"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </div>
 
-  <!-- Small Screen UI (SwiperJS)-->
-  <div id="mobile-ui" class="mobile-ui"></div>
+    <!-- dynamic sidebar -->
+    <div id="dynamicSidebar" class="sidebar">
+        <!-- icon-only menu -->
+        <div id="icon-menu" class="icon-menu">
+            <i class="bi bi-box fs-2"></i>
+            <div class="flex-column justify-content-center align-items-center flex-shrink-0 bg-body-tertiary mt-3 h-100"> 
+                <ul class="nav nav-pills nav-flush flex-column mb-auto text-center"> 
+                    <li class="nav-item"> 
+                        <a href="#" class="nav-link active py-3 border-bottom rounded-0" data-face="front">
+                            <i class="bi bi-1-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                    <li> 
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" data-face="right"> 
+                            <i class="bi bi-2-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                    <li> 
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" data-face="back"> 
+                            <i class="bi bi-3-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                    <li> 
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" data-face="left"> 
+                            <i class="bi bi-4-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                    <li> 
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" data-face="top"> 
+                            <i class="bi bi-5-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                    <li> 
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" data-face="bottom"> 
+                            <i class="bi bi-6-circle fs-5"></i>
+                        </a> 
+                    </li> 
+                </ul> 
+            </div> 
+        </div>
+        <!-- button menu -->
+        <div id="button-menu" class="button-menu">
+            <div id="btns2" class="d-flex flex-column flex-nowrap justify-content-center align-items-center py-2">
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="front">Face 1</button>
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="right">Face 2</button>
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="back">Face 3</button>
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="left">Face 4</button>
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="top">Face 5</button>
+                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="bottom">Face 6</button>
+            </div>
+        </div>
+    </div>
 
-  <!-- Clickable edge (like GitHub) -- will sit between menu and content and toggle collapse -->
-  <div id="menu-edge" aria-hidden="true" title="Toggle menu"></div>
+    <!-- 3d cube application -->
+    <div id="app" class="app">
 
-  <!-- Medium and Large Screens (3D Cube UI) -->
-  <main class="app">
+        <!-- spacer column: a placeholder which provides space for sidebar menu -->
+        <div id="scolumn" class="scolumn d-flex justify-content-end">
 
-    <!-- sidebar menu -->
-    <nav class="menu" aria-label="Cube faces">
-
-        <!-- toggle icon -->
-        <div class="menu-top">
-          <button id="menu-collapse-toggle" class="menu-collapse" aria-label="Toggle menu" aria-expanded="true">
-            <span class="sr-only">Toggle menu</span>
-            <i class="bi bi-box-arrow-in-left icon-collapse" aria-hidden="true"></i>
-            <i class="bi bi-box-arrow-in-right icon-expand" aria-hidden="true"></i>
-          </button>
+            <!-- floating buttons (only appears on large screens) -->
+            <div class="floating-buttons">
+                <div id="btns1" class="d-flex flex-column flex-nowrap">
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="front">Face 1</button>
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="right">Face 2</button>
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="back">Face 3</button>
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="left">Face 4</button>
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="top">Face 5</button>
+                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="bottom">Face 6</button>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="menu-logo electrolize" aria-label="3D Cube UI">
-          <div class="logo-text">3D</div>
-          <div class="logo-icon" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 512 512" role="img" aria-hidden="true">
-              <polygon fill="currentColor" fill-opacity="0" points="240.988,12.877 13.76,107.164 13.76,412.378 256.008,499.259 498.264,412.378 498.264,107.164 " />
-              <g fill="currentColor">
-                <path d="M256.008,512L1.764,420.824V99.15L240.708,0l269.528,98.782v322.042L256.008,512z M25.757,403.933 l230.251,82.586l230.251-82.586V115.545L241.252,25.729l-215.495,89.44V403.933z" />
-                <polygon points="256.008,211.936 9.705,123.599 17.815,101.005 256.008,186.438 494.209,101.005 502.319,123.599" />
-                <rect x="244.011" y="199.187" width="23.994" height="300.08" />
-              </g>
-            </svg>
-          </div>
-          <div class="logo-text">Cube</div>
-        </div>
+        <!-- cube column -->
+        <main id="ccolumn" class="d-flex flex-grow-1 justify-content-center align-items-center">
+            
+            <div class="scene" id="scene">
+                <div class="cube" id="cube">
+                
+                    <!-- Front Face -->
+                    <div class="face face-front" data-face="front">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-front-content"></div>
+                    </div>
 
-        <div class="menu-inner" data-menu-slot></div>
+                    <!-- Right Face -->
+                    <div class="face face-right" data-face="right">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-right-content"></div>
+                    </div>
 
-    </nav>
+                    <!-- Back Face -->
+                    <div class="face face-back" data-face="back">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-back-content"></div>
+                    </div>
 
-    <section class="viewport">
-      <div class="scene" id="scene">
+                    <!-- Left Face -->
+                    <div class="face face-left" data-face="left">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-left-content"></div>
+                    </div>
 
-        <!-- Begin 3D cube -->
-        <div class="cube" id="cube">
-          
-          <!-- Front Face -->
-          <div class="face face-front" data-face="front">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-front-content"></div>
-          </div>
+                    <!-- Top Face -->
+                    <div class="face face-top" data-face="top">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-top-content"></div>
+                    </div>
 
-          <!-- Right Face -->
-          <div class="face face-right" data-face="right">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-right-content"></div>
-          </div>
+                    <!-- Bottom Face -->
+                    <div class="face face-bottom" data-face="bottom">
+                        <div class="face-border"></div>
+                        <div class="face-content" id="face-bottom-content"></div>
+                    </div>
 
-          <!-- Back Face -->
-          <div class="face face-back" data-face="back">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-back-content"></div>
-          </div>
+                </div>            
+            </div>
 
-          <!-- Left Face -->
-          <div class="face face-left" data-face="left">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-left-content"></div>
-          </div>
+        </main>
 
-          <!-- Top Face -->
-          <div class="face face-top" data-face="top">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-top-content"></div>
-          </div>
-
-          <!-- Bottom Face -->
-          <div class="face face-bottom" data-face="bottom">
-            <div class="face-border"></div>
-            <div class="face-content" id="face-bottom-content"></div>
-          </div>
-
-        </div>
-        <!-- End 3D cube -->
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Templates -->
-  <template id="tpl-menu-button">
-    <button class="btn" type="button" data-face="">
-      <i class="bi icon" aria-hidden="true"></i>
-      <span class="label"></span>
-    </button>
-  </template>
-
-  <template id="tpl-mobile-slide">
-    <div class="swiper-slide mobile-slide" data-face="">
-      <div class="slide-content mobile-slide-content">
-        <div class="slide-inner mobile-slide-inner"></div>
-      </div>
     </div>
-  </template>
 
-  <template id="tpl-notification">
-    <div class="notify-banner" role="alert" aria-live="polite">
-      <div class="notify-msg"></div>
-      <button class="notify-close" aria-label="Dismiss">
-        <i class="bi bi-x-lg" aria-hidden="true"></i>
-      </button>
-    </div>
-  </template>
+    <!-- Bootstrap 5.3.8 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    
+    <!-- SwiperJS 12 -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
-  <script type="module" src="js/main.js"></script>
-  <!-- DEV USE -->
-  <script type="module" src="dev-use-showScreenSize.js"></script>
+    <!-- Local Javascript -->
+    <script src="assets/js/notifications.js"></script>
+    <script src="assets/js/urlManager.js"></script>
+    <script src="assets/js/app.js"></script>
+
+    <!-- DEV USE: show screen dimensions for debugging/troubleshooting CSS issues -->
+    <script src="assets/js/sss.js"></script>
 
 </body>
-</html>
+</html>    
