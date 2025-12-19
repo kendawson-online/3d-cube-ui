@@ -26,6 +26,12 @@
     
 }
 
+body {
+    background-color: #000000;
+    color: var(--text);
+    font-family: "Roboto";
+}
+
 /* mobile styles moved to assets/css/mobile-ui.css */
 
 .app {
@@ -93,6 +99,7 @@
 
 .icon-menu .nav {
     padding: 0.25rem 0;
+    background-color: #000000;
 }
 
 .icon-menu .nav-link {
@@ -101,9 +108,9 @@
     justify-content: center;
     padding: 0.6rem 0.4rem;
     margin: 0.25rem 0.35rem;
-    background: transparent;
+    background: #000000;
     color: #ffffff;
-    border: none;
+    border: 1px solid white;
 }
 
 .icon-menu .nav-link i {
