@@ -48,10 +48,11 @@
     </div>
 
     <!-- mobile UI (SwiperJS) -->
-    <div id="mobile-ui" class="mobile-ui">
-        <div class="top-controls">
+    <!-- Hidden inline by default to prevent initial flash; JS will reveal when ready -->
+    <div id="mobile-ui" class="mobile-ui" style="visibility:hidden;opacity:0;pointer-events:none;">
+        <div class="top-controls mb-3">
             <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
+            <div class="swiper-pagination pt-4"></div>
             <div class="swiper-button-next"></div>
         </div>
         <div class="swiper mySwiper">
@@ -106,15 +107,33 @@
                 </ul> 
             </div> 
         </div>
-        <!-- button menu -->
+        <!-- large button menu -->
         <div id="button-menu" class="button-menu">
+
+            <!-- logo -->
+            <div class="menu-logo electrolize d-flex flex-row justify-content-center align-items-center gap-2 mb-4" aria-label="3D Cube UI">
+                <div class="logo-text">3D</div>
+                <div>
+                    <svg width="32" height="32" viewBox="0 0 512 512" role="img" aria-hidden="true">
+                    <polygon fill="currentColor" fill-opacity="0" points="240.988,12.877 13.76,107.164 13.76,412.378 256.008,499.259 498.264,412.378 498.264,107.164 " />
+                    <g fill="currentColor">
+                        <path d="M256.008,512L1.764,420.824V99.15L240.708,0l269.528,98.782v322.042L256.008,512z M25.757,403.933 l230.251,82.586l230.251-82.586V115.545L241.252,25.729l-215.495,89.44V403.933z" />
+                        <polygon points="256.008,211.936 9.705,123.599 17.815,101.005 256.008,186.438 494.209,101.005 502.319,123.599" />
+                        <rect x="244.011" y="199.187" width="23.994" height="300.08" />
+                    </g>
+                    </svg>
+                </div>
+                <div class="logo-text">Cube</div>
+            </div>
+
+            <!-- buttons -->
             <div id="btns2" class="d-flex flex-column flex-nowrap justify-content-center align-items-center py-2">
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
-                <button class="btn btn-outline-secondary mb-2 sb-btns" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
             </div>
         </div>
     </div>
@@ -127,13 +146,13 @@
 
             <!-- floating buttons (only appears on large screens) -->
             <div class="floating-buttons">
-                <div id="btns1" class="d-flex flex-column flex-nowrap">
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
-                    <button class="btn btn-outline-secondary fbtns mb-2" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
+                <div id="btns1" class="d-flex flex-column flex-nowrap justify-content-center align-items-center">
+                    <button class="btn fbtns mb-2" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
                 </div>
             </div>
             

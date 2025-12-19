@@ -14,17 +14,29 @@
     align-items: center;
     gap: 0.5rem;
 }
+/* Prevent flash of default slide: hide mobile UI until JS marks the app ready */
+html:not(.app-ready) .mobile-ui {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* When app is ready, force mobile UI visible (override inline hiding) */
+html.app-ready .mobile-ui {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
 
 /* top control row (pagination + nav) */
 .mobile-ui .top-controls {
     /* Use flex so all three items align vertically via align-items:center */
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     height: 50px;
-    width: 100%;
+    width: 95%;
     margin-bottom: 6px;
-    --top-controls-offset: 110px; /* horizontal offset from center for nav buttons */
 }
 
 .mobile-ui .top-controls .swiper-button-prev,
@@ -78,6 +90,12 @@
     text-align: left;
 }
 
+/* Hide scrollbar for iframe slides (iframe has its own scrollbar) */
+.mobile-ui .swiper-slide[data-type="iframe"] {
+    overflow: hidden;
+    padding: 22px 4px 20px 20px; /* Keep padding for heading, but reduce right padding */
+}
+
 /* Style Swiper navigation arrows */
 .mobile-ui .swiper-button-next,
 .mobile-ui .swiper-button-prev {
@@ -127,10 +145,43 @@
 .mobile-ui .swiper-slide iframe {
     display: block;
     width: 100%;
-    height: auto;
-    max-height: 60vh;
-    border: 0;
+    border: 1px dashed white;
     background: rgba(0,0,0,0.8);
+}
+
+/* For iframe-type slides, make iframe fill entire slide area */
+.mobile-ui .swiper-slide[data-type="iframe"] iframe {
+    height: 65vh;
+    border: none;
+}
+
+/* Custom scrollbar styling for mobile slides */
+.mobile-ui .swiper-slide {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.mobile-ui .swiper-slide::-webkit-scrollbar {
+    width: 12px;
+}
+
+.mobile-ui .swiper-slide::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mobile-ui .swiper-slide::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+.mobile-ui .swiper-slide::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 230, 0.8);
+}
+
+/* Scrollbar styling for iframe content (applies to documents inside iframes) */
+.mobile-ui .swiper-slide iframe {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
 }
 
 /* small-screen visibility rules (also handle very short viewports) */

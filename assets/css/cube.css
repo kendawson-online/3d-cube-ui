@@ -132,18 +132,18 @@ body {
 /* Ensure body scrollbar inherits these styles */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
   background: transparent;
-  margin: 2rem 0.3rem;
+  margin: 2rem 0.4rem;
 }
 
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
-  background: #00ffe6;
+  background: var(--accent);
   border-radius: 4px;
 }
 

@@ -2,7 +2,7 @@
 // 3D Cube UI
 // Inspired by: https://codepen.io/l-ignatova/pen/qByExmV
 // Created 12/7/25 by <ken@kendawson.com>
-// Last updated: 12/16/25
+// Last updated: 12/19/25
 // ------------------------------------------------------------------------
 
 const debugmode = false;
@@ -43,6 +43,7 @@ let currentX = 0;
 let currentY = 0;
 
 // Store faces data globally to avoid duplication
+let mobileSwiper = null; // reference to Swiper instance for mobile syncing
 let facesData = null;
 
 const setActiveButton = (face) => {
@@ -142,6 +143,13 @@ const goToFace = (targetFace, options = {}) => {
   // Update URL unless this navigation came from history (to avoid duplicate entries)
   if (!skipHistory && window.urlManager) {
     window.urlManager.updateURL(currentFace);
+  }
+  // If a mobile swiper exists, move it to the correct slide to reflect this navigation
+  if (mobileSwiper && Array.isArray(facesData)) {
+    const idx = facesData.findIndex(f => f.id === currentFace);
+    if (idx >= 0 && typeof mobileSwiper.slideToLoop === 'function') {
+      mobileSwiper.slideToLoop(idx, 400, false);
+    }
   }
 };
 
@@ -256,6 +264,10 @@ const loadData = async () => {
     facesData.forEach(face => {
       const slide = document.createElement('div');
       slide.className = 'swiper-slide';
+      // Add data-type attribute for iframe slides (used for conditional styling)
+      if (face.type === 'iframe') {
+        slide.setAttribute('data-type', 'iframe');
+      }
       slide.innerHTML = document.getElementById(`face-${face.id}-content`).innerHTML;
       wrapper.appendChild(slide);
     });
@@ -347,7 +359,7 @@ loadData().then(() => {
       // Don't set inline display style - CSS media queries handle this
       
       // Initialize Swiper for mobile UI
-      const swiper = new Swiper('.mySwiper', {
+      const swiperOptions = {
         effect: 'cube',
         grabCursor: true,
         loop: true,
@@ -368,8 +380,40 @@ loadData().then(() => {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-      });
-      
+      };
+
+      const startIndex = Array.isArray(facesData) ? facesData.findIndex(f => f.id === currentFace) : -1;
+      if (startIndex >= 0) swiperOptions.initialSlide = startIndex;
+
+      // Add init event handler to options so it fires during construction
+      swiperOptions.on = {
+        init: function() {
+          // Mark document ready so CSS reveals mobile UI (preventing flash of wrong slide)
+          try { document.documentElement.classList.add('app-ready'); } catch (e) {}
+        }
+      };
+
+      const swiper = new Swiper('.mySwiper', swiperOptions);
+      mobileSwiper = swiper;
+
+      // Keep urlManager and app state in sync when the user navigates the swiper
+      if (mobileSwiper && Array.isArray(facesData)) {
+        mobileSwiper.on('slideChange', () => {
+          const idx = mobileSwiper.realIndex ?? mobileSwiper.activeIndex;
+          const faceObj = facesData[idx];
+          if (!faceObj) return;
+          const newFaceId = faceObj.id;
+          if (newFaceId && newFaceId !== currentFace) {
+            currentFace = newFaceId;
+            setActiveButton(currentFace);
+            // update urlManager so URL reflects mobile slide
+            if (window.urlManager && typeof window.urlManager.updateURL === 'function') {
+              window.urlManager.updateURL(currentFace);
+            }
+          }
+        });
+      }
+
       // Set flag in localStorage so spinner doesn't show on subsequent loads
       localStorage.setItem('ui-has-loaded', 'true');
     }, 300);

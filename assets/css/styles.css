@@ -32,8 +32,6 @@ body {
     font-family: "Roboto";
 }
 
-/* mobile styles moved to assets/css/mobile-ui.css */
-
 .app {
     display: none;
     flex-wrap: nowrap;
@@ -58,6 +56,10 @@ body {
 .scolumn {
    min-width: 90px;
    position: relative;
+}
+
+.menu-logo {
+  color: var(--accent);
 }
 
 /* used on large screen (>= 1150px wide) */
@@ -136,8 +138,16 @@ body {
     display: none;
 }
 
-.sb-btns {
+.sb-btns, 
+.fbtns {
     width: 85%;
+    color: white;
+    border: 1px solid white;
+}
+
+.fbtns:hover {
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 /* active states for buttons and nav links */
@@ -302,7 +312,7 @@ body {
 
 @media (min-width: 1000px) and (max-width: 1099px) {
     :root { 
-        --cube-size: 78vh;
+        --cube-size: 86vh;
         --safe-top: 8%;
         --safe-right: 10%;
         --safe-bottom: 6%;
@@ -324,7 +334,7 @@ body {
 
 @media (min-width: 1100px) and (max-width: 1149px) {
     :root { 
-        --cube-size: 60vh;
+        --cube-size: 86vh;
         --safe-top: 8%;
         --safe-right: 10%;
         --safe-bottom: 6%;
@@ -348,7 +358,7 @@ body {
 /* large screens (over 1150px wide) */
 @media (min-width: 1150px) and (max-width: 1399px) {
     :root { 
-        --cube-size: 70vh;
+        --cube-size: 86vh;
         --safe-top: 8%;
         --safe-right: 10%;
         --safe-bottom: 6%;
@@ -365,7 +375,7 @@ body {
     .mobile-ui { display: none; }
     .sidebar { display: none; }
     .app { display: flex; }
-    .scolumn { width: 300px; justify-content: left !important; }
+    .scolumn { width: 300px; }
     .button-menu { display: none; }
     .icon-menu { display: none; }
     .floating-buttons { display: block; width: 15rem; height: 25rem; }
@@ -375,13 +385,13 @@ body {
 
 @media (min-width: 1400px) and (max-width: 1799px) {
     :root { 
-        --cube-size: 75vh;
-        --safe-top: 8%;
-        --safe-right: 10%;
-        --safe-bottom: 6%;
-        --safe-left: 12%;
+        --cube-size: 87vh;
+        --safe-top: 9%;
+        --safe-right: 7.2%;
+        --safe-bottom: 9%;
+        --safe-left: 7.4%;
         --heading-size: 2.2rem;
-        --text-size: 1.05rem;
+        --text-size: 1.3rem;
         --text-line-height: 1.6;
         --para-margin: 0.8rem;
         --content-gap: 1.1rem;
@@ -392,7 +402,7 @@ body {
     .mobile-ui { display: none; }
     .sidebar { display: none; }
     .app { display: flex; }
-    .scolumn { width: 360px; justify-content: left !important; }
+    .scolumn { width: 30vw; }
     .button-menu { display: none; }
     .icon-menu { display: none; }
     .floating-buttons { display: block; width: 15rem; height: 25rem; }
@@ -419,7 +429,7 @@ body {
     .mobile-ui { display: none; }
     .sidebar { display: none; }
     .app { display: flex; }
-    .scolumn { width: 37vw; padding-right: 4%; }
+    .scolumn { width: 37vw; }
     .floating-buttons { display: block; }
     .button-menu { display: none; }
     .icon-menu { display: none; }
