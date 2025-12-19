@@ -1,0 +1,150 @@
+/* Mobile-only Swiper UI styles
+   Loaded only on small screens via media attribute in index.html
+*/
+
+.mobile-ui { 
+    display: flex; 
+    height: 85vh;
+    width: 95vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* top control row (pagination + nav) */
+.mobile-ui .top-controls {
+    /* Use flex so all three items align vertically via align-items:center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 6px;
+    --top-controls-offset: 110px; /* horizontal offset from center for nav buttons */
+}
+
+.mobile-ui .top-controls .swiper-button-prev,
+.mobile-ui .top-controls .swiper-button-next {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--accent);
+    z-index: 20;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-ui .top-controls .swiper-button-prev::after,
+.mobile-ui .top-controls .swiper-button-next::after {
+    font-size: 28px;
+}
+
+.mobile-ui .top-controls .swiper-button-prev { margin-right: var(--top-controls-offset); }
+.mobile-ui .top-controls .swiper-button-next { margin-left: var(--top-controls-offset); }
+
+.mobile-ui .top-controls .swiper-pagination {
+    position: relative;
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-ui .swiper {
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+.mobile-ui .swiper-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* align content to top so heading is visible */
+    align-items: flex-start; /* left-align content */
+    padding: 22px 64px 22px 20px;
+    overflow-y: auto;
+    background: rgba(0,0,0,1);
+    color: var(--text);
+    border: 4px solid var(--accent);
+    z-index: 1;
+    text-align: left;
+}
+
+/* Style Swiper navigation arrows */
+.mobile-ui .swiper-button-next,
+.mobile-ui .swiper-button-prev {
+    color: var(--accent);
+}
+
+.mobile-ui .swiper-button-next:after,
+.mobile-ui .swiper-button-prev:after {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.mobile-ui .swiper-pagination-bullet {
+    background: var(--accent);
+    opacity: 0.5;
+}
+
+.mobile-ui .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+/* When pagination is placed outside the .swiper we want it above the slides */
+.mobile-ui .swiper-pagination {
+    position: relative;
+    margin-bottom: 0.5rem;
+    z-index: 10;
+}
+
+.mobile-ui .swiper-wrapper {
+    transform-style: preserve-3d;
+}
+
+.mobile-ui .swiper-slide.swiper-slide-active {
+    z-index: 10; /* keep active slide above clones */
+}
+
+/* Ensure headings inside slides are visible and left-aligned */
+.mobile-ui .swiper-slide h1,
+.mobile-ui .swiper-slide h2,
+.mobile-ui .swiper-slide .face-heading {
+    width: 100%;
+    margin: 0 0 0.75rem 0;
+    text-align: left;
+}
+
+/* Mobile iframe sizing: make iframes fill slide width and limit height on small screens */
+.mobile-ui .swiper-slide iframe {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 60vh;
+    border: 0;
+    background: rgba(0,0,0,0.8);
+}
+
+/* small-screen visibility rules (also handle very short viewports) */
+@media (max-height: 420px) {
+    .mobile-ui { display: flex; }
+    .app { display: none; }
+    .sidebar { display: none; }
+    .floating-buttons { display: none; }
+}
+
+@media (max-width: 749px) {
+    .mobile-ui { display: flex; }
+    .app { display: none; }
+    .sidebar { display: none; }
+    .button-menu { display: none; }
+    .icon-menu { display: none; }
+}

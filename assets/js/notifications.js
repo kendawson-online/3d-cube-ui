@@ -25,7 +25,9 @@ function showNotification(message, type = 'info', timeout = 4000) {
   }
 
   const banner = template.cloneNode(true);
-  
+  // Ensure the cloned template is visible (template may be hidden inline)
+  banner.style.display = '';
+
   // Add type-specific class
   banner.classList.add(`notify-${type}`);
   

@@ -218,6 +218,38 @@ const loadData = async () => {
     });
     await Promise.all(promises);
     // After faces are populated, initial face will be set below
+    // Apply titles/labels to UI controls based on faces data
+    const applyFaceTitles = (faces) => {
+      if (!faces || !faces.forEach) return;
+      faces.forEach((face) => {
+        const title = face.title || '';
+        // Select every control that references this face via data-face
+        document.querySelectorAll(`[data-face="${face.id}"]`).forEach((el) => {
+          if (title) {
+            el.setAttribute('title', title);
+            el.setAttribute('aria-label', title);
+          }
+          // For visible buttons (floating and sidebar) update/create a .btn-label element
+          if (el.matches && el.matches('button.fbtns, button.sb-btns')) {
+            const labelEl = el.querySelector('.btn-label');
+            if (labelEl) {
+              labelEl.textContent = title;
+            } else if (title) {
+              const span = document.createElement('span');
+              span.className = 'btn-label';
+              span.textContent = title;
+              const hidden = el.querySelector('.visually-hidden');
+              if (hidden) el.insertBefore(span, hidden);
+              else el.appendChild(span);
+            }
+            // keep hidden fallback in sync
+            const hidden = el.querySelector('.visually-hidden');
+            if (hidden) hidden.textContent = title;
+          }
+        });
+      });
+    };
+    applyFaceTitles(facesData);
     
     // Populate mobile swiper slides with the same content
     const wrapper = document.getElementById('swiper-wrapper');
