@@ -2,9 +2,10 @@
 // 3D Cube UI
 // Inspired by: https://codepen.io/l-ignatova/pen/qByExmV
 // Created 12/7/25 by <ken@kendawson.com>
-// Last updated: 12/19/25
+// Last updated: 12/20/25
 // ------------------------------------------------------------------------
 
+// show extra debugging data
 const debugmode = false;
 
 const faces = ["front", "right", "back", "left", "top", "bottom"];
@@ -29,20 +30,17 @@ const app = document.getElementById("app");
 const buttons = Array.from(document.querySelectorAll("[data-face]"));
 
 // Check immediately if user has already seen the loader
-// Note: CSS media queries control app visibility, not inline styles
 const hasSeenLoader = localStorage.getItem('ui-has-loaded');
 if (hasSeenLoader) {
   // Hide spinner immediately to prevent flash
   spinner.style.display = 'none';
-  // Don't set app.style.display here - let CSS media queries handle it
 }
 
-// Don't initialize URL yet - wait for faces data to load
 let currentFace = "front";
 let currentX = 0;
 let currentY = 0;
 
-// Store faces data globally to avoid duplication
+// Store faces data globally
 let mobileSwiper = null; // reference to Swiper instance for mobile syncing
 let facesData = null;
 
@@ -279,8 +277,6 @@ const loadData = async () => {
   }
 };
 
-// (iframe placeholder swapping removed; iframes are handled as static content)
-
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
     goToFace(btn.dataset.face);
@@ -461,7 +457,7 @@ if (debugmode) {
       scolumn.style.border = '1px dashed yellow';
       ccolumn.style.border = '1px dashed red';
     }
-    // print out cube colum dimensions
+    // print out cube column dimensions
     let elem = document.getElementById("ccolumn");
     let rect = elem.getBoundingClientRect();
     console.groupCollapsed('Cube column dimensions');
