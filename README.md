@@ -4,6 +4,10 @@ A 3D cube UI originally inspired by the Cube CV:
 
 https://codepen.io/l-ignatova/pen/qByExmV
 
+You can see an online demo here:
+
+http://cube.kendawson.online/
+
 ![Screenshot](assets/img/screenshot.png)
 
 # Features
