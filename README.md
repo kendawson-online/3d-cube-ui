@@ -6,7 +6,7 @@ https://codepen.io/l-ignatova/pen/qByExmV
 
 You can see an online demo here:
 
-http://cube.kendawson.online/
+https://cube.kendawson.online/
 
 ![Screenshot](assets/img/screenshot.png)
 
