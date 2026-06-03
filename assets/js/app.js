@@ -187,9 +187,10 @@ const loadData = async () => {
       
       // Now that we have faces data, determine initial face from URL or localStorage
       const urlFace = window.urlManager.getURLFace();
-      const storedFace = localStorage.getItem("ui-current-face");
-      
-      // Priority: URL > localStorage > default
+
+      // Priority: URL > default (front)
+      // Do not auto-apply a previously stored face when the URL has no `view` param —
+      // always default to the front face on first load without a `view`.
       if (urlFace && urlFace !== 'invalid') {
         currentFace = urlFace;
       } else if (urlFace === 'invalid') {
@@ -197,10 +198,10 @@ const loadData = async () => {
         if (window.notify) {
           window.notify.error('The requested URL does not exist');
         }
-        currentFace = storedFace || "front";
+        currentFace = "front";
       } else {
-        // No URL parameter - use localStorage or default
-        currentFace = storedFace || "front";
+        // No URL parameter - default to front
+        currentFace = "front";
       }
       
       // Set rotation for initial face
