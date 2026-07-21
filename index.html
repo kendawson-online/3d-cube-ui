@@ -67,9 +67,9 @@
         <!-- icon-only menu -->
         <div id="icon-menu" class="icon-menu">
 
-            <a href="#" data-face="front" title="3D Cube UI">
+            <span class="brand-link" data-face="front" title="3D Cube UI">
                 <i class="bi bi-box fs-2" style="color: var(--accent)"></i>
-            </a>
+            </span>
 
             <div class="flex-column justify-content-center align-items-center flex-shrink-0 bg-body-tertiary mt-3 h-100"> 
                 <ul class="nav nav-pills nav-flush flex-column mb-auto text-center"> 
@@ -127,12 +127,12 @@
 
             <!-- buttons -->
             <div id="btns2" class="d-flex flex-column flex-nowrap justify-content-center align-items-center py-2">
-                <button class="btn mb-2 sb-btns" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
-                <button class="btn mb-2 sb-btns" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
-                <button class="btn mb-2 sb-btns" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
-                <button class="btn mb-2 sb-btns" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
-                <button class="btn mb-2 sb-btns" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
-                <button class="btn mb-2 sb-btns" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
+                <button class="btn mb-2 sb-btns" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Face 1</span></button>
+                <button class="btn mb-2 sb-btns" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Face 2</span></button>
+                <button class="btn mb-2 sb-btns" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Face 3</span></button>
+                <button class="btn mb-2 sb-btns" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Face 4</span></button>
+                <button class="btn mb-2 sb-btns" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Face 5</span></button>
+                <button class="btn mb-2 sb-btns" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Face 6</span></button>
             </div>
         </div>
     </div>
@@ -146,12 +146,12 @@
             <!-- floating buttons (only appears on large screens) -->
             <div class="floating-buttons">
                 <div id="btns1" class="d-flex flex-column flex-nowrap justify-content-center align-items-center">
-                    <button class="btn fbtns mb-2" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Front Face</span></button>
-                    <button class="btn fbtns mb-2" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Right Face</span></button>
-                    <button class="btn fbtns mb-2" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Back Face</span></button>
-                    <button class="btn fbtns mb-2" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Left Face</span></button>
-                    <button class="btn fbtns mb-2" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Top Face</span></button>
-                    <button class="btn fbtns mb-2" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Bottom Face</span></button>
+                    <button class="btn fbtns mb-2" data-face="front"><span class="btn-label"></span><span class="visually-hidden">Face 1</span></button>
+                    <button class="btn fbtns mb-2" data-face="right"><span class="btn-label"></span><span class="visually-hidden">Face 2</span></button>
+                    <button class="btn fbtns mb-2" data-face="back"><span class="btn-label"></span><span class="visually-hidden">Face 3</span></button>
+                    <button class="btn fbtns mb-2" data-face="left"><span class="btn-label"></span><span class="visually-hidden">Face 4</span></button>
+                    <button class="btn fbtns mb-2" data-face="top"><span class="btn-label"></span><span class="visually-hidden">Face 5</span></button>
+                    <button class="btn fbtns mb-2" data-face="bottom"><span class="btn-label"></span><span class="visually-hidden">Face 6</span></button>
                 </div>
             </div>
             
@@ -163,38 +163,38 @@
             <div class="scene" id="scene">
                 <div class="cube" id="cube">
                 
-                    <!-- Front Face -->
-                    <div class="face face-front" data-face="front">
+                    <!-- Face 1 -->
+                    <div class="face face-front" data-face="front" role="region" aria-label="Face 1">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-front-content"></div>
                     </div>
 
-                    <!-- Right Face -->
-                    <div class="face face-right" data-face="right">
+                    <!-- Face 2 -->
+                    <div class="face face-right" data-face="right" role="region" aria-label="Face 2">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-right-content"></div>
                     </div>
 
-                    <!-- Back Face -->
-                    <div class="face face-back" data-face="back">
+                    <!-- Face 3 -->
+                    <div class="face face-back" data-face="back" role="region" aria-label="Face 3">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-back-content"></div>
                     </div>
 
-                    <!-- Left Face -->
-                    <div class="face face-left" data-face="left">
+                    <!-- Face 4 -->
+                    <div class="face face-left" data-face="left" role="region" aria-label="Face 4">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-left-content"></div>
                     </div>
 
-                    <!-- Top Face -->
-                    <div class="face face-top" data-face="top">
+                    <!-- Face 5 -->
+                    <div class="face face-top" data-face="top" role="region" aria-label="Face 5">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-top-content"></div>
                     </div>
 
-                    <!-- Bottom Face -->
-                    <div class="face face-bottom" data-face="bottom">
+                    <!-- Face 6 -->
+                    <div class="face face-bottom" data-face="bottom" role="region" aria-label="Face 6">
                         <div class="face-border"></div>
                         <div class="face-content" id="face-bottom-content"></div>
                     </div>
@@ -212,10 +212,12 @@
     <!-- SwiperJS 12 -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 
-    <!-- Local Javascript -->
-    <script src="assets/js/notifications.js"></script>
-    <script src="assets/js/urlManager.js"></script>
-    <script src="assets/js/app.js"></script>
+    <!-- Local Javascript (?v= cache-buster: bump on each deploy so browsers
+         fetch fresh JS instead of a stale cached copy — app.js has no
+         Cache-Control header, so Chromium caches it heuristically otherwise) -->
+    <script src="assets/js/notifications.js?v=20260720c"></script>
+    <script src="assets/js/urlManager.js?v=20260720c"></script>
+    <script src="assets/js/app.js?v=20260720c"></script>
 
     <!-- DEV USE: show screen size dimensions -->
     <!-- <script src="https://cdn.jsdelivr.net/gh/kendawson-online/sss@v1.1.0/sss.js"></script> -->
