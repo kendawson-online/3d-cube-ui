@@ -1,1 +1,4 @@
 *.bak
+
+# Safe-zone overlay images (temporary for template alignment)
+*-safe.png

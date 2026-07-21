@@ -17,6 +17,10 @@
   backdrop-filter: blur(3px);
   overflow: hidden;
   pointer-events: none;
+  /* Prevent accidental text selection while click-dragging to rotate. #5a */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .face.face-active {
@@ -60,6 +64,15 @@
   padding: 0.5rem 0.5rem 0.5rem 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: var(--accent) transparent;
+  /* Phase 2: text-plane readability. The content plane is rotated (invisibly,
+     while opacity is 0) so text reads upright, then faded in. See app.js. */
+  transition: opacity 0.18s ease;
+  transform-origin: center center;
+}
+
+/* Incoming face is hidden during the cube rotation, then faded in. */
+.face-content.text-fade {
+  opacity: 0;
 }
 
 /* For inactive faces create a transparent overlay that blocks pointer/wheel
@@ -70,6 +83,15 @@
 
 /* Remove focus outline to preserve the floating text illusion */
 .face-content:focus {
+  outline: none;
+}
+
+/* The active face region is focused (tabindex=-1) for screen-reader
+   announcement; suppress its focus ring so no square appears around the
+   cube. (See also #setActiveFace in app.js.) */
+.face:focus,
+.face.face-active:focus,
+.face.face-active {
   outline: none;
 }
 
@@ -153,7 +175,7 @@ body::-webkit-scrollbar-thumb:hover {
 }
 
 /* text wrapping helper: put flowing text and floated media inside .text-wrap */
-.text-wrap { 
+.text-wrap {
   display: block;
   width: 100%;
 }
@@ -168,10 +190,10 @@ body::-webkit-scrollbar-thumb:hover {
   -webkit-shape-outside: inset(0);
 }
 
-.text-wrap:after { 
-  content: ""; 
-  display: table; 
-  clear: both; 
+.text-wrap:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 /* paragraphs inside text-wrap inherit the scaling from .face p */
@@ -197,15 +219,144 @@ body::-webkit-scrollbar-thumb:hover {
 .face-top   { transform: rotateX(90deg) translateZ(calc(var(--cube-size, 600px) / 2)); }
 .face-bottom{ transform: rotateX(-90deg) translateZ(calc(var(--cube-size, 600px) / 2)); }
 
-/* Hotspots for easier click navigation on desktop */
-.hotspot {
-  position: absolute;
-  top: 0;
-  width: 20px;
-  height: 100%;
+/* Brand logo in sidebar — keep it chrome, not a focusable link (no blue
+   focus square on first load). Click still navigates to front via [data-face]. */
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  z-index: 5;
+  outline: none;
+}
+.brand-link:focus,
+.brand-link:focus-visible,
+.brand-link:focus-within {
+  outline: none;
+  box-shadow: none;
 }
 
-.hotspot-left { left: 0; }
-.hotspot-right { right: 0; }
+/* Hotspots for easier click navigation on desktop.
+   Invisible until hovered (opacity 0 -> 1) so the cube stays clean but the
+   affordance is discoverable. Left/right = yaw, top/bottom = pitch. */
+.hotspot {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  /* The overlay is pointer-events:none so drags pass through, but the arrows
+     themselves must be clickable. Re-enable here so the hotspot (not the drag
+     layer underneath) receives the press. #2 */
+  pointer-events: auto;
+}
+
+.scene {
+  cursor: grab;
+}
+
+/* Static overlay sized to the cube's screen footprint. It never rotates or
+   moves between faces, so the navigation arrows stay put while the cube spins
+   inside it. overflow:visible lets the arrows poke just outside the cube
+   without creating a scrollbar (the cube itself is sized to 90vw/90vh, leaving
+   headroom). #2 */
+.cube-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.scene.grabbing {
+  cursor: grabbing;
+}
+
+.scene:hover .hotspot,
+.hotspot:focus-visible {
+  opacity: 1;
+}
+
+.hotspot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* Larger arrow + semi-transparent so it reads as a control, not chrome.
+     White fill stands out against the patterned background. */
+  border: 22px solid transparent;
+  opacity: 0.6;
+}
+
+.hotspot-left,
+.hotspot-right {
+  top: 0;
+  width: 56px;
+  height: 100%;
+}
+
+/* Strips are anchored to the overlay (== cube footprint) and poke just
+   OUTSIDE the cube edge so they read as controls beside the cube, not on it. #2 */
+.hotspot-left { left: -32px; }
+.hotspot-right { right: -32px; }
+
+.hotspot-left::after {
+  left: 16px;
+  border-right-color: #ffffff;
+}
+
+.hotspot-right::after {
+  right: 16px;
+  border-left-color: #ffffff;
+}
+
+.hotspot-top,
+.hotspot-bottom {
+  left: 0;
+  width: 100%;
+  height: 56px;
+}
+
+.hotspot-top { top: -32px; }
+.hotspot-bottom { bottom: -32px; }
+
+.hotspot-top::after {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: #ffffff;
+}
+
+.hotspot-bottom::after {
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: #ffffff;
+}
+
+.hotspot-top::after {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: #ffffff;
+}
+
+.hotspot-bottom::after {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: #ffffff;
+}
+
+/* Respect users who prefer reduced motion: shorten/disable the spin. */
+@media (prefers-reduced-motion: reduce) {
+  .cube {
+    transition: transform 0.001s linear;
+  }
+  .hotspot {
+    transition: none;
+  }
+  .notify-banner {
+    transition: none;
+  }
+}
